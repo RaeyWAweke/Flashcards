@@ -9,7 +9,7 @@ The Simple Flashcards app is an app that shows a flashcard with a single questio
 
 ### App Walk-though
 
-<img src="file:///.file/id=6571367.7590022" width=200><br>
+<img src="https://github.com/RaeyWAweke/Flashcards/blob/master/ezgif.com-crop.gif" width=200><br>
 
 ## Required
 - [x] Create New Project in Xcode
