@@ -10,7 +10,7 @@ The Simple Flashcards app is an app that shows a flashcard with a single questio
 ### App Walk-though
 `TODO://` Add the URL to your animated app walk-though `gif` in the image tag below. Make sure the gif actually renders and animates when viewing this README. (☝️ Remove this paragraph after after adding gif)
 
-<img src="https://giphy.com/embed/QaeBiJ97bGGMzRBeWh"width=200><br>
+<img src="<iframe src="https://giphy.com/embed/QaeBiJ97bGGMzRBeWh" width="238" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/QaeBiJ97bGGMzRBeWh">via GIPHY</a></p>"width=200><br>
 <iframe src="https://giphy.com/embed/QaeBiJ97bGGMzRBeWh" width="238" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/QaeBiJ97bGGMzRBeWh">via GIPHY</a></p>
 
 
