@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Giving round corners
-        card.layer.cornerRadius = 20.0
+        card.layer.cornerRadius = 20
         frontLabel.layer.cornerRadius = 20.0
         backLabel.layer.cornerRadius = 20.0
         
@@ -59,6 +59,15 @@ class ViewController: UIViewController {
         }
     }
     
+    func updateFlashcard(question: String, answer: String, extraAnswerOne: String?, extraAnswerTwo: String?) {
+        frontLabel.text = question
+        backLabel.text = answer
+        
+        btnOptionOne.setTitle(extraAnswerOne, for: .normal)
+        btnOptionTwo.setTitle(answer, for: .normal)
+        btnOptionThree.setTitle(extraAnswerTwo, for: .normal)
+    }
+    
     @IBAction func didTapOptionOne(_ sender: Any) {
         btnOptionOne.isHidden = true
     }
@@ -74,6 +83,19 @@ class ViewController: UIViewController {
     }
     @IBAction func didTapOptionThree(_ sender: Any) {
         btnOptionThree.isHidden = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navigationController = segue.destination as! UINavigationController
+        
+        let creationController = navigationController.topViewController as! CreationViewController
+        
+        creationController.flashcardsController = self
+        
+        if segue.identifier == "EditSegue" {
+        creationController.initialQuestion = frontLabel.text
+        creationController.initialAnswer = backLabel.text
+        }
     }
 }
 
