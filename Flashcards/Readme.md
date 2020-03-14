@@ -1,5 +1,26 @@
 ## Simple Flashcards app
 
+## Lab 3
+
+### App Description
+In this updated flashcard app, the user can now browse through multiple flashcards, as well as save and delete flashcards.
+
+### App Walk-though
+
+
+<img src="https://github.com/RaeyWAweke/Flashcards/blob/master/Lab3.gif?raw=true" width=200><br>
+
+
+## Required
+- [x] User can browse through multiple flashcards
+- [x] User can re-open the app and see previously created flashcards
+- [x] Push code to GitHub
+## Optional
+- [x] User can delete a flashcard
+- [x] User can edit existing flashcard
+- [x] User can store multiple choice questions
+
+
 ## Lab 2
 
 ### App Description
@@ -20,6 +41,7 @@ This new update of the flashcards app now has the option to create a new flashca
 - [x] User gets an error if they try to create a new flashcard with no question or answer
 - [x] User can edit existing flashcard
 - [x] User can add multiple choice answers in the creation screen
+
 
 ## Lab 1
 
