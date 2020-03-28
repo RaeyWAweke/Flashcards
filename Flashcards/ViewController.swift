@@ -39,7 +39,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Read saved Flashcards
-        readSavedFlashcards()
+         readSavedFlashcards()
         
         // Adding out initial flashcard if needed
         if flashcards.count == 0 {
@@ -50,6 +50,7 @@ class ViewController: UIViewController {
                 updateNextPrevButtons()
             }
         
+        frontLabel.isHidden = false
         
         // Giving round corners
         card.layer.cornerRadius = 20
@@ -64,30 +65,36 @@ class ViewController: UIViewController {
         card.layer.shadowOpacity = 0.3
         
         // Buttons style
+        
         btnOptionOne.layer.borderWidth = 3.0
-        btnOptionOne.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.4697876429, blue: 0.6162674829, alpha: 1)
-        btnOptionOne.layer.cornerRadius = 15
+        btnOptionOne.layer.borderColor = #colorLiteral(red: 0.3518724144, green: 0.8151190877, blue: 1, alpha: 1)
+        btnOptionOne.layer.cornerRadius = 20
         
         btnOptionTwo.layer.borderWidth = 3.0
-        btnOptionTwo.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.4697876429, blue: 0.6162674829, alpha: 1)
-        btnOptionTwo.layer.cornerRadius = 15.0
+        btnOptionTwo.layer.borderColor = #colorLiteral(red: 0.3518724144, green: 0.8151190877, blue: 1, alpha: 1)
+        btnOptionTwo.layer.cornerRadius = 20.0
+        
         
         btnOptionThree.layer.borderWidth = 3.0
-        btnOptionThree.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.4697876429, blue: 0.6162674829, alpha: 1)
-        btnOptionThree.layer.cornerRadius = 15.0
-        
-        //updateFlashcard(question: "What's the capital of Ethiopia?", answer: "Ethiopia", extraAnswerOne: "Accra", extraAnswerTwo: "Harare")
+        btnOptionThree.layer.borderColor = #colorLiteral(red: 0.3518724144, green: 0.8151190877, blue: 1, alpha: 1)
+        btnOptionThree.layer.cornerRadius = 20.0
         
     }
 
 
     @IBAction func didTapOnFlashcard(_ sender: Any) {
-        if(frontLabel.isHidden == true){
-            frontLabel.isHidden = false
-        }
-        else{
-            frontLabel.isHidden = true
-        }
+        flipFlashcard()
+    }
+    func flipFlashcard() {
+        
+        UIView.transition(with: card, duration: 0.3, options: .transitionFlipFromRight, animations: {
+            if(self.frontLabel.isHidden == true){
+                self.frontLabel.isHidden = false
+            }
+            else{
+                self.frontLabel.isHidden = true
+            }
+        })
     }
     
     func updateFlashcard(question: String, answer: String, extraAnswerOne: String?, extraAnswerTwo: String?, isExisting: Bool) {
@@ -121,20 +128,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didTapOptionOne(_ sender: Any) {
-        btnOptionOne.isHidden = true
+        btnOptionOne.isEnabled = false
+        btnOptionOne.layer.borderColor = #colorLiteral(red: 0.7464932799, green: 0.7466199994, blue: 0.7464765906, alpha: 1)
     }
     
     @IBAction func didTapOptionTwo(_ sender: Any) {
         frontLabel.isHidden = true
-        if btnOptionOne.isHidden == false {
-            btnOptionOne.isHidden = true
+        if btnOptionOne.isEnabled == true {
+            btnOptionOne.isEnabled = false
+            btnOptionOne.layer.borderColor = #colorLiteral(red: 0.7464932799, green: 0.7466199994, blue: 0.7464765906, alpha: 1)
         }
-        if btnOptionThree.isHidden == false {
-            btnOptionThree.isHidden = true
+        if btnOptionThree.isEnabled == true {
+            btnOptionThree.isEnabled = false
+            btnOptionThree.layer.borderColor = #colorLiteral(red: 0.7464932799, green: 0.7466199994, blue: 0.7464765906, alpha: 1)
         }
     }
     @IBAction func didTapOptionThree(_ sender: Any) {
-        btnOptionThree.isHidden = true
+        btnOptionThree.isEnabled = false
+        btnOptionThree.layer.borderColor = #colorLiteral(red: 0.7464932799, green: 0.7466199994, blue: 0.7464765906, alpha: 1)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -155,21 +166,25 @@ class ViewController: UIViewController {
         currentIndex -= 1
         
         // update labels
-        updateLabels()
+        //updateLabels()
         
         // update next and prev buttons
         updateNextPrevButtons()
+        
+        animateCardOutPrev()
+        resetOptions()
     }
+    
     @IBAction func didTapOnNext(_ sender: Any) {
         
         // increase current index
         currentIndex += 1
         
-        // update labels
-        updateLabels()
-        
         // update next and prev buttons
         updateNextPrevButtons()
+        
+        animateCardOut()
+        resetOptions()
     }
     
     func updateNextPrevButtons() {
@@ -187,8 +202,6 @@ class ViewController: UIViewController {
         } else {
             prevButton.isEnabled = true
         }
-        
-        
     }
     
     func updateLabels() {
@@ -273,6 +286,61 @@ class ViewController: UIViewController {
         }
         
         print("😎 Current number of flashcards: \(flashcards.count)")
+    }
+    
+    func animateCardOut() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.card.transform = CGAffineTransform.identity.translatedBy(x: -400.0, y: 0.0)
+        }, completion: { finished in
+            
+            // Update labels
+            self.updateLabels()
+            
+            // Run other animation
+            self.animateCardIn()
+        })
+    }
+    
+    func animateCardIn() {
+        
+        // Start on the right side (don't animate this)
+        card.transform = CGAffineTransform.identity.translatedBy(x: 400.0, y: 0.0)
+        
+        // Animate card going back to its original position
+        UIView.animate(withDuration: 0.3) {
+            self.card.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func animateCardOutPrev() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.card.transform = CGAffineTransform.identity.translatedBy(x: 400.0, y: 0.0)
+        }, completion: { finished in
+            
+            // Update labels
+            self.updateLabels()
+            
+            // Run other animation
+            self.animateCardInPrev()
+        })
+    }
+    
+    func animateCardInPrev() {
+        
+        // Start on the left side (don't animate this)
+        card.transform = CGAffineTransform.identity.translatedBy(x: -400.0, y: 0.0)
+        
+        // Animate card going back to its original position
+        UIView.animate(withDuration: 0.3) {
+            self.card.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func resetOptions() {
+        btnOptionThree.isEnabled = true
+        btnOptionOne.isEnabled = true
+        btnOptionOne.layer.borderColor = #colorLiteral(red: 0.3518724144, green: 0.8151190877, blue: 1, alpha: 1)
+        btnOptionThree.layer.borderColor = #colorLiteral(red: 0.3518724144, green: 0.8151190877, blue: 1, alpha: 1)
     }
 }
 
